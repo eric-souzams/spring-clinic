@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Clínica Spring Security ::: Login</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="clínica médica com agendamento de consultas online" />
+<link rel="icon" th:href="@{/image/favicon.ico}" />
+<!-- Icons fontawesome -->
+<!--<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet" />-->
+<!--	<link th:href="@{/css/icons.css(v=${version})}" rel="stylesheet" />-->
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@media ( min-width : 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/style-login.css(v=${version})}" rel="stylesheet" />
+</head>
+<body>
+	<form class="form-signin was-validated" method="post" th:action="@{/login}">
+		<div class="text-center mb-4">
+			<img class="mb-4" th:src="@{/image/spring-security.png}" alt="" width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal">Clínica Spring Security</h1>
+
+			<p class="font-weight-lighter">Seja bem-vindo.</p>
+			<p class="text-muted">Realize seu login para continuar</p>					
+			<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'" role="alert">
+			  <h4 th:text="${titulo}" class="alert-heading">Credenciais...</h4>
+			  <p th:text="${texto}">Login ou senha incorretos...</p>
+			  <hr>
+			  <p class="mb-0"><small th:text="${subtexto}">Acesso permitido...</small></p>
+			</div>
+		</div>
+
+		<div class="form-label-group">
+			<input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="username" required autofocus>
+			<label for="inputEmail">Email</label>
+			<div class="invalid-feedback">Use seu email cadastrado como login.</div>
+		</div>
+
+		<div class="form-label-group">
+			<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+			<label for="inputPassword">Senha</label>
+			<div class="invalid-feedback">Digite sua senha.</div>	
+		</div>
+
+		<div class="checkbox mb-3">
+			<label> <input type="checkbox" value="remember-me">
+				Remember me
+			</label>
+		</div>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+		<hr>
+		<nav class="nav nav-pills flex-column flex-sm-row">
+			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/u/novo/cadastro}">
+                <i class="fa fa-arrow">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+						<path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+					</svg>
+                </i>&nbsp;Novo cadastro
+            </a>
+			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/u/p/redefinir/senha}">
+                <i class="fa fa-key">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
+						<path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+					</svg>
+                </i>&nbsp;Recuperar senha
+            </a>
+			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/}">
+                <i class="fa fa-home">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+						<path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+					</svg>
+                </i>&nbsp;Home
+            </a>
+		</nav>
+		<p class="mt-5 mb-3 text-muted text-center">Clínica Spring Security&copy; 2022</p>
+	</form>
+</body>
+</html>

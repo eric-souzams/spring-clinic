@@ -47,7 +47,7 @@
 					</li>					
 				</ul>
 
-				<form class="form-inline mt-2 mt-md-0">
+				<form class="form-inline mt-2 mt-md-0" sec:authorize="!isAuthenticated()">
 					<div class="form-check mb-2 mr-sm-2">
 						<a class="btn btn-outline-success my-2 my-sm-0" role="button"
 							th:href="@{/login}">Login</a>
@@ -59,12 +59,17 @@
 					</div>
 				</form>
 
-				<form th:action="@{/logout}" 
-					  method="post"  class="form-inline mt-2 mt-md-0">
+				<form th:action="@{/logout}" sec:authorize="isAuthenticated()" method="post"  class="form-inline mt-2 mt-md-0">
 					<div class="btn-group mb-2 mr-sm-2">
 						<button type="button" class="btn btn-light">
-							<i class="fas fa-user"></i> <span class=""
-								>Bob</span>
+							<i class="fas fa-user">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+									<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+								</svg>
+							</i>
+							<span class="" sec:authentication="name">
+								Bob
+							</span>
 						</button>
 						<button type="button"
 							class="btn btn-danger dropdown-toggle dropdown-toggle-split"

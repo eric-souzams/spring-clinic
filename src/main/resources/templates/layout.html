@@ -17,13 +17,16 @@
 <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css(v=${version}) }" rel="stylesheet" />
 <!--<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />-->
 <!--<link href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css" rel="stylesheet"/>-->
+	<link th:href="@{/css/responsive.dataTables.min.css(v=${version})}" rel="stylesheet" />
+	<link th:href="@{/css/dataTables.bootstrap4.min.css(v=${version})}" rel="stylesheet" />
 <!-- jQueryUI (autocomplete) -->
 <!--<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>-->
+	<link th:href="@{/css/jquery-ui.css(v=${version})}" rel="stylesheet" />
 <!-- Icons fontawesome -->
+<!--	<link th:href="@{/css/icons.css(v=${version})}" rel="stylesheet" />-->
 <!--<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet" />-->
 <!-- Custom styles for this template -->
 <link th:href="@{/css/style-home.css(v=${version}) }" rel="stylesheet" />
-
 </head>
 <body>
 	<header th:replace="fragments/header :: cabecalho">
@@ -47,14 +50,23 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script th:src="@{/webjars/jquery/jquery.min.js(v=${version}) }"></script>
 <!--	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>-->
+	<script th:src="@{/js/popper.min.js(v=${version}) }"></script>
+
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js(v=${version}) }"></script>
 	<!-- jQueryUI (autocomplete) -->
 <!--	<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>-->
+	<script th:src="@{/js/jquery-ui.min.js(v=${version}) }"></script>
+
 	<!-- 	Datatables JS -->
 <!--	<script	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>-->
 <!--	<script	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
 <!--	<script	src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>-->
 <!--	<script	src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>-->
+	<script th:src="@{/js/moment-with-locales.min.js(v=${version}) }"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js(v=${version}) }"></script>
+	<script th:src="@{/js/dataTables.bootstrap4.min.js(v=${version}) }"></script>
+	<script th:src="@{/js/dataTables.responsive.min.js(v=${version}) }"></script>
+
 	<!-- 	MEUS JS -->
 	<script th:replace=":: js"></script>
 	<script th:replace=":: inlinescript" th:inline="javascript"></script>
