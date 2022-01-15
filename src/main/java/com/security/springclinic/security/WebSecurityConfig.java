@@ -5,11 +5,13 @@ import com.security.springclinic.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
 @EnableWebSecurity
 @Configuration
@@ -34,13 +36,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/u/**").hasAuthority(ADMIN)
 
                 //acesso medico
+                .antMatchers("/medicos/especialidade/titulo/*").hasAnyAuthority(PACIENTE, MEDICO)
                 .antMatchers("/medicos/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority(MEDICO, ADMIN)
                 .antMatchers("/medicos/**").hasAuthority(MEDICO)
 
                 //acesso especialidades
+                .antMatchers("/especialidades/titulo").hasAnyAuthority(MEDICO, ADMIN, PACIENTE)
                 .antMatchers("/especialidades/datatables/server/medico/*").hasAnyAuthority(MEDICO, ADMIN)
-                .antMatchers("/especialidades/titulo").hasAnyAuthority(MEDICO, ADMIN)
+                .antMatchers("/especialidades/datatables/server").hasAnyAuthority(ADMIN)
+                .antMatchers("/especialidades/editar/*").hasAnyAuthority(ADMIN)
+                .antMatchers("/especialidades/salvar").hasAnyAuthority(ADMIN)
+                .antMatchers("/especialidades/excluir/*").hasAnyAuthority(ADMIN)
                 .antMatchers("/especialidades/**").hasAuthority(ADMIN)
+
+                //acesso agendamentos
+                .antMatchers("/agendamentos/editar").hasAnyAuthority(PACIENTE, MEDICO)
+                .antMatchers("/agendamentos/editar/consulta/*").hasAnyAuthority(PACIENTE, MEDICO)
+                .antMatchers("/agendamentos/datatables/server/historico").hasAnyAuthority(PACIENTE, MEDICO)
+                .antMatchers("/agendamentos/horario/medico/*/data/*").hasAnyAuthority(PACIENTE, MEDICO)
+                .antMatchers("/agendamentos/excluir/consulta/*").hasAnyAuthority(PACIENTE, MEDICO)
+
+                .antMatchers("/agendamentos/historico/consultas").hasAuthority(MEDICO)
+
+                .antMatchers("/agendamentos/agendar").hasAnyAuthority(PACIENTE)
+                .antMatchers("/agendamentos/historico/paciente").hasAuthority(PACIENTE)
+                .antMatchers("/agendamentos/salvar").hasAuthority(PACIENTE)
+                .antMatchers("/agendamentos/**").hasAuthority(PACIENTE)
 
                 //acesso paciente
                 .antMatchers("/pacientes/**").hasAuthority(PACIENTE)

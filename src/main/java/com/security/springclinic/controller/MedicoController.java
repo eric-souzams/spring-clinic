@@ -6,6 +6,7 @@ import com.security.springclinic.service.MedicoService;
 import com.security.springclinic.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -70,15 +71,21 @@ public class MedicoController {
     @GetMapping(value = "/id/{idMed}/excluir/especializacao/{idEsp}")
     public String excluirEspecialidadePorMedico(@PathVariable("idMed") Long idMed,
                                        @PathVariable("idEsp") Long idEsp, RedirectAttributes redirectAttributes) {
-        try {
-            service.excluirEspecialidadePorMedico(idMed, idEsp);
 
-            redirectAttributes.addFlashAttribute("sucesso", "Especialidade removida com sucesso.");
-        } catch (DataIntegrityViolationException exception) {
-            redirectAttributes.addFlashAttribute("falha", "Houve um erro ao tentar remover a especialidade.");
-        }
+            if (service.existeEspecialidadeAgendada(idMed, idEsp)) {
+                redirectAttributes.addFlashAttribute("falha", "Existem consultas pendentes agendadas, exclusão negada.");
+            } else {
+                service.excluirEspecialidadePorMedico(idMed, idEsp);
+
+                redirectAttributes.addFlashAttribute("sucesso", "Especialidade removida com sucesso.");
+            }
 
         return "redirect:/medicos/dados";
+    }
+
+    @GetMapping(value = "/especialidade/titulo/{titulo}")
+    public ResponseEntity<?> getMedicosPorEspecialidade(@PathVariable("titulo") String titulo) {
+        return ResponseEntity.ok(service.buscarMedicosPorEspecialidade(titulo));
     }
 
 }

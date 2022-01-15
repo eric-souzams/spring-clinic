@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class MedicoService {
@@ -47,5 +49,15 @@ public class MedicoService {
         Medico med = repository.findById(idMed).get();
 
         med.getEspecialidades().removeIf(e -> e.getId().equals(idEsp));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Medico> buscarMedicosPorEspecialidade(String titulo) {
+        return repository.findByMedicosPorEspecialidade(titulo);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existeEspecialidadeAgendada(Long idMed, Long idEsp) {
+        return repository.hasEspecialidadeAgendada(idMed, idEsp).isPresent();
     }
 }
