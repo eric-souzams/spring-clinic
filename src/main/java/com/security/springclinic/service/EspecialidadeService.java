@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -46,4 +49,22 @@ public class EspecialidadeService {
         repository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<String> buscarEspecialidadeByTermo(String termo) {
+        return repository.findEspecialidadesByTermo(termo);
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Especialidade> buscarPorTitulos(String[] titulos) {
+        return repository.findByTitulos(titulos);
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> buscarEspecialidadesPorMedico(Long medicoId, HttpServletRequest request) {
+        datatables.setRequest(request);
+        datatables.setColunas(DatatablesColunas.ESPECIALIDADES);
+        Page<Especialidade> page = repository.findByIdMedico(medicoId, datatables.getPageable());
+
+        return datatables.getResponse(page);
+    }
 }

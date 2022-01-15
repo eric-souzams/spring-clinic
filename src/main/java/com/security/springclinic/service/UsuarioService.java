@@ -82,4 +82,16 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepositorio.findByIdAndPerfis(usuarioId, perfisId)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou perfil inexistente!"));
     }
+
+    public boolean isSenhaCorreta(String senhaDigitada, String senhaBanco) {
+        return encoder.matches(senhaDigitada, senhaBanco);
+    }
+
+    @Transactional(readOnly = false)
+    public void alterarSenha(Usuario usuario, String senhaDigitada) {
+        String novaSenha = encoder.encode(senhaDigitada);
+        usuario.setSenha(novaSenha);
+
+        usuarioRepositorio.save(usuario);
+    }
 }

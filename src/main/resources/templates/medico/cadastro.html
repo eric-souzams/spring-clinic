@@ -26,6 +26,10 @@
 					<div class="col-md-8">
 					
 						<div th:replace="fragments/alert  :: alerta-sucesso"></div>
+
+						<div class="add-toast position-absolute" aria-live="polite" aria-atomic="true" style="top:0px; right:20px;">
+							<!--toast-->
+						</div>
 						
 						<form th:action="${medico.id == null} ? @{/medicos/salvar} : @{/medicos/editar}"
 							  th:object="${medico}"	method="POST" class="was-validated">
@@ -103,6 +107,58 @@
 		
 	</section>
 	<script	th:src="@{/js/medico.js(v=${version})}"	th:fragment="js"></script>
-	<script th:inline="javascript" th:fragment="inlinescript"></script>
+	<script th:inline="javascript" th:fragment="inlinescript">
+		$(document).ready(function () {
+			moment.locale('pt-BR');
+			var idMedico = [[${medico.id != null ? medico.id : 0}]];
+			if (idMedico != 0) {
+				var table = $('#table-medico-especializacao').DataTable({
+					language: {
+						"sEmptyTable": "Nenhum registro encontrado",
+						"sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+						"sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+						"sInfoFiltered": "(Filtrados de _MAX_ registros)",
+						"sInfoPostFix": "",
+						"sInfoThousands": ".",
+						"sLengthMenu": "_MENU_ Resultados por página",
+						"sLoadingRecords": "Carregando...",
+						"sProcessing": "Processando...",
+						"sZeroRecords": "Nenhum registro encontrado",
+						"sSearch": "Pesquisar",
+						"oPaginate": {
+							"sNext": "Próximo",
+							"sPrevious": "Anterior",
+							"sFirst": "Primeiro",
+							"sLast": "Último"
+						},
+						"oAria": {
+							"sSortAscending": ": Ordenar colunas de forma ascendente",
+							"sSortDescending": ": Ordenar colunas de forma descendente"
+						}
+					},
+					searching: false,
+					lengthMenu: [3, 5],
+					processing: true,
+					serverSide: true,
+					responsive: true,
+					ajax: {
+						url: '/especialidades/datatables/server/medico/' + idMedico,
+						data: 'data'
+					},
+					columns: [
+						{data: 'id'},
+						{data: 'titulo'},
+						{orderable: false,
+						 data: 'id',
+							"render": function(id) {
+								return '<a class="btn btn-danger btn-sm btn-block" href="/medicos/id/' + idMedico + '/excluir/especializacao/' +
+									id +'" role="button" data-toggle="modal" data-target="#confirm-modal"><i class="fas fa-times-circle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/></svg></i></a>';
+							}
+						}
+					]
+				});
+			}
+		});
+	</script>
 </body>
 </html>
