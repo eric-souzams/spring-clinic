@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
-	layout:decorate="~{layout}">
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8" />
 </head>
 <body>
-
 	<section class="layout-content" layout:fragment="corpo">
 		<main role="main">
 
@@ -32,7 +32,7 @@
 							<div class="mb-3">
 								<label for="nome">Nome Completo</label>
 								<div class="input-group">
-									<input type="text" class="form-control" id="nome" placeholder="insira seu nome completo" 
+									<input type="text" class="form-control" id="nome" placeholder="Insira seu nome completo"
 											aria-describedby="validationTooltipUsernamePrepend"
 										    th:field="*{nome}" required />
 									<div class="invalid-feedback">Nome é requerido.</div>
@@ -53,8 +53,7 @@
 								<label for="email">Email</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" 
-												id="validationTooltipUsernamePrepend">@</span>
+										<span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
 									</div>
 									<input type="email" class="form-control" id="email"
 										placeholder="Email" aria-describedby="validationTooltipUsernamePrepend"
@@ -65,7 +64,7 @@
 							
 							<div class="mb-3">
 								<label for="senha">Senha</label> 
-								<input type="password" class="form-control" id="senha" maxlength="6"
+								<input type="password" class="form-control" id="senha" maxlength="20"
 									placeholder="Insira sua senha de acesso" th:field="*{usuario.senha}" required />
 								<div class="invalid-feedback">Senha é requerida para confirmar a operação.</div>
 							</div>							
@@ -76,6 +75,7 @@
 									<button type="submit" class="btn btn-primary"
 										data-toggle="tooltip" data-placement="right" title="Salvar">
 										<i class="fas fa-save"></i>
+										Salvar
 									</button>
 								</div>
 							</div>

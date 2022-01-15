@@ -4,7 +4,7 @@ import com.security.springclinic.datatables.Datatables;
 import com.security.springclinic.datatables.DatatablesColunas;
 import com.security.springclinic.model.Perfil;
 import com.security.springclinic.model.Usuario;
-import com.security.springclinic.repository.UsuarioRepositorio;
+import com.security.springclinic.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -24,13 +24,13 @@ import java.util.Map;
 @Service
 public class UsuarioService implements UserDetailsService {
 
-    private final UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepository usuarioRepository;
     private final Datatables datatables;
     private final PasswordEncoder encoder;
 
     @Transactional(readOnly = true)
     public Usuario buscarPorEmail(String email) {
-        return usuarioRepositorio.findByEmail(email);
+        return usuarioRepository.findByEmail(email);
     }
 
     @Transactional(readOnly = true)
@@ -39,8 +39,8 @@ public class UsuarioService implements UserDetailsService {
         datatables.setColunas(DatatablesColunas.USUARIOS);
 
         Page<?> page = datatables.getSearch().isEmpty()
-                ? usuarioRepositorio.findAll(datatables.getPageable())
-                : usuarioRepositorio.findByEmailOrPerfil(datatables.getSearch(), datatables.getPageable());
+                ? usuarioRepository.findAll(datatables.getPageable())
+                : usuarioRepository.findByEmailOrPerfil(datatables.getSearch(), datatables.getPageable());
 
         return datatables.getResponse(page);
     }
@@ -69,17 +69,17 @@ public class UsuarioService implements UserDetailsService {
         String encryptedPassword = encoder.encode(usuario.getSenha());
         usuario.setSenha(encryptedPassword);
 
-        usuarioRepositorio.save(usuario);
+        usuarioRepository.save(usuario);
     }
 
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long id) {
-        return usuarioRepositorio.findById(id).get();
+        return usuarioRepository.findById(id).get();
     }
 
     @Transactional(readOnly = true)
     public Usuario buscarPorIdEPerfis(Long usuarioId, Long[] perfisId) {
-        return usuarioRepositorio.findByIdAndPerfis(usuarioId, perfisId)
+        return usuarioRepository.findByIdAndPerfis(usuarioId, perfisId)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou perfil inexistente!"));
     }
 
@@ -92,6 +92,6 @@ public class UsuarioService implements UserDetailsService {
         String novaSenha = encoder.encode(senhaDigitada);
         usuario.setSenha(novaSenha);
 
-        usuarioRepositorio.save(usuario);
+        usuarioRepository.save(usuario);
     }
 }
