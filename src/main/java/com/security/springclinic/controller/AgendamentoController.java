@@ -36,6 +36,7 @@ public class AgendamentoController {
     private final PacienteService pacienteService;
     private final EspecialidadeService especialidadeService;
 
+    //pagina de fazer agendamentos
     @PreAuthorize("hasAuthority('PACIENTE')")
     @GetMapping(value = {"/agendar", "/", ""})
     public String agendarConsulta(Agendamento agendamento) {
@@ -43,6 +44,7 @@ public class AgendamentoController {
         return "agendamento/cadastro";
     }
 
+    //rota para trazer horario de um medico / dia
     @PreAuthorize("hasAnyAuthority('MEDICO','PACIENTE')")
     @GetMapping(value = "/horario/medico/{medicoId}/data/{data}")
     public ResponseEntity<?> getHorarios(@PathVariable("medicoId") Long id,
@@ -51,6 +53,7 @@ public class AgendamentoController {
         return ResponseEntity.ok(service.buscarHorariosNaoAgendadosPorMedicoEData(id, data));
     }
 
+    //rota para salvar um agendamentos
     @PreAuthorize("hasAuthority('PACIENTE')")
     @PostMapping(value = "/salvar")
     public String salvar(Agendamento agendamento, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user) {
@@ -71,6 +74,7 @@ public class AgendamentoController {
         return "redirect:/agendamentos/agendar";
     }
 
+    //pagina para mostrar consultas já agendadas para medico e paciente
     @PreAuthorize("hasAnyAuthority('MEDICO','PACIENTE')")
     @GetMapping(value = {"/historico/consultas", "/historico/paciente"})
     public String historico() {
@@ -78,6 +82,7 @@ public class AgendamentoController {
         return "agendamento/historico-paciente";
     }
 
+    //rota para trazer historico de consultas baseada no perfil
     @PreAuthorize("hasAnyAuthority('MEDICO','PACIENTE')")
     @GetMapping(value = "/datatables/server/historico")
     public ResponseEntity<?> historicoAgendamentosPorPaciente(HttpServletRequest request,
@@ -94,6 +99,7 @@ public class AgendamentoController {
         return ResponseEntity.notFound().build();
     }
 
+    //pagina de editar uma consulta
     @PreAuthorize("hasAnyAuthority('MEDICO','PACIENTE')")
     @GetMapping(value = "/editar/consulta/{id}")
     public String preEditarConsultaPaciente(@PathVariable("id") Long id, ModelMap model,
@@ -105,6 +111,7 @@ public class AgendamentoController {
         return "agendamento/cadastro";
     }
 
+    //rota para editar uma consulta
     @PreAuthorize("hasAnyAuthority('MEDICO','PACIENTE')")
     @PostMapping(value = "/editar")
     public String editarConsulta(Agendamento agendamento, RedirectAttributes redirectAttributes,
@@ -134,6 +141,7 @@ public class AgendamentoController {
         return "redirect:/";
     }
 
+    //rota para deletar uma consulta
     @PreAuthorize("hasAuthority('MEDICO')")
     @GetMapping(value = "/excluir/consulta/{id}")
     public String excluirConsulta(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {

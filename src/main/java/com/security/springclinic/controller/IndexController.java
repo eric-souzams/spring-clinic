@@ -9,16 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
+	//pagina inicial
 	@GetMapping({"/", "/home"})
 	public String home() {
 		return "home";
 	}
 
+	//pagina de login
 	@GetMapping({"/login"})
 	public String login() {
 		return "login";
 	}
 
+	//pagina de error no login
 	@GetMapping({"/login-error"})
 	public String loginError(ModelMap model) {
 		model.addAttribute("alerta", "erro");
@@ -29,6 +32,7 @@ public class IndexController {
 		return "login";
 	}
 
+	//pagina de acesso negado
 	@GetMapping({"/acesso-negado"})
 	public String acessoNegado(ModelMap model, HttpServletResponse response) {
 		model.addAttribute("status", response.getStatus());

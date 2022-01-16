@@ -30,6 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //acesso publico
                 .antMatchers("/webjars/**", "/css/**", "/js/**", "/image/**").permitAll()
                 .antMatchers("/", "/home").permitAll()
+                .antMatchers("/u/novo/cadastro", "/u/cadastro/realizado", "/u/cadastro/paciente/salvar").permitAll()
+                .antMatchers("/u/confirmacao/cadastro").permitAll()
+                .antMatchers("/u/p/**", "/u/p/redefinir/senha", "/u/p/recuperar/senha", "/u/p/nova/senha").permitAll()
 
                 //acesso admin
                 .antMatchers("/u/editar/senha", "/u/confirmar/senha").hasAnyAuthority(MEDICO, PACIENTE)

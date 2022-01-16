@@ -19,7 +19,7 @@ public class EspecialidadeController {
 
     private final EspecialidadeService service;
 
-    //pagina inicial
+    //pagina de cadastro de especialidades
     @GetMapping(value = {"", "/"})
     public String especialidades(Especialidade especialidade) {
         return "especialidade/especialidade";

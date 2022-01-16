@@ -25,6 +25,7 @@ public class MedicoController {
     private final MedicoService service;
     private final UsuarioService usuarioService;
 
+    //pagina de dados pessoais do medico
     @GetMapping(value = "/dados")
     public String abrirPorMedico(Medico medico, ModelMap model, @AuthenticationPrincipal User user) {
         if (medico.hasNotId()) {
@@ -35,6 +36,7 @@ public class MedicoController {
         return "medico/cadastro";
     }
 
+    //rota para cadastrar um medico
     @PostMapping(value = "/salvar")
     public String salvar(Medico medico, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user) {
         try {
@@ -54,6 +56,7 @@ public class MedicoController {
         return "redirect:/medicos/dados";
     }
 
+    //rota para editar um medico
     @PostMapping(value = "/editar")
     public String editar(Medico medico, RedirectAttributes redirectAttributes) {
         try {
@@ -68,6 +71,7 @@ public class MedicoController {
         return "redirect:/medicos/dados";
     }
 
+    //rota para excluir uma especialidade do medico
     @GetMapping(value = "/id/{idMed}/excluir/especializacao/{idEsp}")
     public String excluirEspecialidadePorMedico(@PathVariable("idMed") Long idMed,
                                        @PathVariable("idEsp") Long idEsp, RedirectAttributes redirectAttributes) {
@@ -83,6 +87,7 @@ public class MedicoController {
         return "redirect:/medicos/dados";
     }
 
+    //rota para trazer as especialidade daquele medico
     @GetMapping(value = "/especialidade/titulo/{titulo}")
     public ResponseEntity<?> getMedicosPorEspecialidade(@PathVariable("titulo") String titulo) {
         return ResponseEntity.ok(service.buscarMedicosPorEspecialidade(titulo));

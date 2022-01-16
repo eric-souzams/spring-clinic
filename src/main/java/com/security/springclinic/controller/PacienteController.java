@@ -22,6 +22,7 @@ public class PacienteController {
     private final PacienteService service;
     private final UsuarioService usuarioService;
 
+    //pagina de dados pessoais do paciente
     @GetMapping(value = "/dados")
     public String cadastro(Paciente paciente, ModelMap model, @AuthenticationPrincipal User user) {
         paciente = service.buscarPorUsuarioEmail(user.getUsername());
@@ -35,6 +36,7 @@ public class PacienteController {
         return "paciente/cadastro";
     }
 
+    //rota para salvar um paciente
     @PostMapping(value = "/salvar")
     public String salvar(Paciente paciente, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user) {
         Usuario usuario = usuarioService.buscarPorEmail(user.getUsername());
@@ -51,6 +53,7 @@ public class PacienteController {
         return "redirect:/pacientes/dados";
     }
 
+    //rota para editar dados do paciente
     @PostMapping(value = "/editar")
     public String editar(Paciente paciente, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user) {
         Usuario usuario = usuarioService.buscarPorEmail(user.getUsername());

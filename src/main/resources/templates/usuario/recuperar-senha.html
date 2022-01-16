@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Clínica Spring Security ::: Login</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="clínica médica com agendamento de consultas online" />
+<link rel="icon" th:href="@{/image/favicon.ico}" />
+<!-- Icons fontawesome -->
+<!--<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet" />-->
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css(v=${version}) }" rel="stylesheet" />
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/style-login.css(v=${version})}" rel="stylesheet" />
+<script th:src="@{/webjars/jquery/jquery.min.js(v=${version}) }"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js(v=${version}) }"></script>
+</head>
+<body>
+	<form th:action="@{/u/p/nova/senha/}" th:object="${usuario}"
+			class="form-signin was-validated" method="POST">
+		<div class="text-center mb-4">
+			<img class="mb-4" th:src="@{/image/spring-security.png}" alt=""
+				width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal">Clínica Spring Security</h1>
+
+			<p class="font-weight-lighter">Redefir Senha</p>
+			<p class="text-muted">Verifique seu e-mail para continuar!</p>
+		</div>
+
+		<div th:replace="fragments/alert :: alerta-sucesso"></div>
+
+		<div class="form-label-group">
+			<input type="email" id="inputEmail" class="form-control" placeholder="e-mail"
+				th:field="*{email}" required autofocus />
+			<label for="inputEmail">Email</label>
+			<div class="invalid-feedback">
+				Use seu email como login.
+			</div>
+		</div>
+
+		<div class="form-label-group">
+			<input type="password" id="inputPassword" class="form-control"
+				placeholder="Password" th:field="*{senha}" required />
+			<label for="inputPassword">Nova Senha</label>
+			<div class="invalid-feedback">Digite uma nova senha.</div>
+		</div>
+
+		<div class="form-label-group">
+			<input type="text" id="inputCodigoVerificador" class="form-control"
+				placeholder="código" th:field="*{codigoVerificador}" required />
+			<label for="inputCodigoVerificador">Código Verificador</label>
+			<div class="invalid-feedback">Insira o código que recebeu por e-mail.</div>
+		</div>
+
+		<button class="btn btn-lg btn-info btn-block" type="submit">Confirmar</button>
+		<hr>
+		<nav class="nav nav-pills flex-column flex-sm-row">
+			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/}">
+				<i class="fas fa-home">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+						<path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+					</svg>
+				</i>&nbsp;Home</a>
+		</nav>
+		<p class="mt-5 mb-3 text-muted text-center">Clínica Spring Security&copy; 2022</p>
+	</form>
+</body>
+</html>
